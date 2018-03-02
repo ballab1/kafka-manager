@@ -11,7 +11,7 @@ LABEL org_name=$CONTAINER_NAME \
 ARG DEBUG_TRACE=0
 
 
-ARG KM_ARGS: "-Djava.net.preferIPv4Stack=true"
+ARG KM_ARGS="-Djava.net.preferIPv4Stack=true"
 ARG KM_VERSION=1.3.3.16
 ENV APPLICATION_SECRET: letmein
 ENV ZK_HOSTS=localhost:2181

@@ -12,7 +12,7 @@ declare KM_CONFIGFILE="conf/application.conf"
 cd /tmp
 git clone https://github.com/yahoo/kafka-manager
 cd kafka-manager
-git checkout ${KM_VERSION}
+git checkout -b "local/${KM_VERSION}" "tags/${KM_VERSION}"
 
 echo 'scalacOptions ++= Seq("-Xmax-classfile-name", "200")' >> build.sbt
 ./sbt clean dist
