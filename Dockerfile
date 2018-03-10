@@ -28,7 +28,7 @@ RUN set -o verbose \
 RUN [[ $DEBUG_TRACE != 0 ]] || rm -rf /tmp/* 
 
 
-WORKDIR /kafka-manager-${KM_VERSION}
+WORKDIR /kafka-manager
 EXPOSE 9000
 
 ENTRYPOINT [ "docker-entrypoint.sh" ]

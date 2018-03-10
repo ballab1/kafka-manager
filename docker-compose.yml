@@ -8,7 +8,14 @@ services:
                 CONTAINER_VERSION: 1.0.0
                 DEBUG_TRACE: 0
                 FROM_BASE: openjdk_8u131.11-r2:20180303
-                KM_ARGS: 'play.http.context=/kafkamgr -Djava.net.preferIPv4Stack=true' 
+                KM_ARGS: '-Djava.net.preferIPv4Stack=true -Dapplication.home=/kafka-manager/home' 
+#                CONSUMER_PROPERTIES_FILE:
+#                KAFKA_MANAGER_PASSWORD:
+#                KAFKA_MANAGER_USERNAME:
+#                KAFKA_MANAGER_AUTH_ENABLED:
+#                BASE_ZK_PATH:
+#                KAFKA_MANAGER_LOGLEVEL:
+#                KM_HTTP_CONTEXT: /kafkamgr
                 KM_VERSION: 1.3.3.16
             cache_from:
                 - alpine:3.6
@@ -22,8 +29,9 @@ services:
             ZK_HOSTS: zookeeper:2181,10.1.3.11:2181
         hostname: kafkamgr
         image: kafkamgr:20180303
-#        links:
-#            - zookeeper:zookeeper
+#        image: sheepkiller/kafka-manager:alpine
+        links:
+            - zookeeper:zookeeper
         logging:
             driver: json-file
             options:
@@ -31,7 +39,9 @@ services:
                 max-size: "10m"
         ports:
             - 8006:9000
-#        restart: unless-stopped
+        restart: unless-stopped
+        volumes:
+            - ./vols/log:/kafka-manager/home
 
 
 #    kafkamgr:
