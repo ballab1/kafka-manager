@@ -32,7 +32,6 @@ unzip -d / ./target/universal/${km}.zip
 #create startup script
 cat << EOF > ${tools}/run.sh
 #!/bin/bash
-
 cd "/${km}"
 /${km}/bin/kafka-manager -Dconfig.file="$KM_CONFIGFILE" "\${KM_ARGS}" "\${@}" 
 EOF
