@@ -1,9 +1,11 @@
-# create property file for runtime
-cat << EOF > ${CRF['env']}/kafka.properties
 #!/bin/bash
 
-export KM_ARGS="\${KM_ARGS:-${KM_ARGS:-'-Djava.net.preferIPv4Stack=true'}}"
-export KM_CONTEXT="\${KM_CONTEXT-${KM_CONTEXT:-/}}"
-export KM_VERSION="1.3.3.16"
+declare -r exportVars='KM_ARGS KM_CONTEXT KM_VERSION KAFKAMGR_HOME KM_CONFIGFILE'
 
-EOF
+export KM_ARGS="${KM_ARGS:-'-Djava.net.preferIPv4Stack=true'}"
+export KM_CONTEXT="${KM_CONTEXT:-/}"
+export KM_VERSION="1.3.3.16"
+export KAFKAMGR_HOME="/usr/local/kafka-manager"
+export KM_CONFIGFILE="${KAFKAMGR_HOME}/conf/application.conf"
+
+lib.createFileForRuntimeEnvironment "kafkamgr.properties" "$exportVars" 

@@ -2,10 +2,7 @@
 
 declare tools=/usr/local/bin
 
-declare KM_VERSION=${KM_VERSION:-1.3.3.16}
 declare km="kafka-manager-${KM_VERSION}"
-declare KM_CONFIGFILE="/kafka-manager/conf/application.conf"
-declare KM_HTTP_CONTEXT="${KM_HTTP_CONTEXT:-/}"
 
 
 cd /tmp
@@ -15,29 +12,23 @@ git clone https://github.com/yahoo/kafka-manager
 cd kafka-manager
 git checkout -b "local/${KM_VERSION}" "tags/${KM_VERSION}" 
 
-if [ "$KM_CONTEXT" != '/' ]; then
-    KM_CONTEXT="${KM_CONTEXT%/}/"
-    sed -i "s|^play.http.context\s*=.*$|play.http.context=\"$KM_HTTP_CONTEXT\"|" "./conf/application.conf"
-    sed -i "s|\(\s\+\)/|\1${KM_HTTP_CONTEXT}|"  "./conf/routes"
-fi
-
 # build application
 echo 'scalacOptions ++= Seq("-Xmax-classfile-name", "200")' >> build.sbt
 ./sbt clean dist
 
 # install what we built
 unzip -d /tmp ./target/universal/${km}.zip
-mkdir -p /kafka-manager
-mv /tmp/${km}/*  /kafka-manager
-cp "${CBF['action']}/application.conf"  "${KM_CONFIGFILE}"
+mkdir -p "$KAFKAMGR_HOME"
+mv /tmp/${km}/*  "$KAFKAMGR_HOME"
+[ ! -e "${KM_CONFIGFILE}" ] || cp "${KM_CONFIGFILE}" "${KM_CONFIGFILE}".bak
 
 #create startup script
 cat << EOF > ${tools}/run.sh
 #!/bin/bash
-
-cd "/${km}"
-/kafka-manager/bin/kafka-manager -Dconfig.file="$KM_CONFIGFILE" "\${KM_ARGS}" "\${@}" 
+cd "${KAFKAMGR_HOME}"
+shift
+exec "${KAFKAMGR_HOME}/bin/kafka-manager" -Dconfig.file="$KM_CONFIGFILE" "\${KM_ARGS}" "\${@}" 
 EOF
 
 chmod +x ${tools}/run.sh
-rm -fr "/kafka-manager/share"
+rm -fr "${KAFKAMGR_HOME}/share"
