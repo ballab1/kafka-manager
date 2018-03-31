@@ -4,13 +4,9 @@ declare tools=/usr/local/bin
 
 declare km="kafka-manager-${KM_VERSION}"
 
-
-cd /tmp
-
 # get our code
-git clone https://github.com/yahoo/kafka-manager
-cd kafka-manager
-git checkout -b "local/${KM_VERSION}" "tags/${KM_VERSION}" 
+tar xvf "${KAFKAMGR['file']}"
+cd "kafka-manager-${KAFKAMGR['version']}"
 
 # build application
 echo 'scalacOptions ++= Seq("-Xmax-classfile-name", "200")' >> build.sbt
@@ -18,18 +14,18 @@ echo 'scalacOptions ++= Seq("-Xmax-classfile-name", "200")' >> build.sbt
 
 # install what we built
 unzip -d /tmp ./target/universal/${km}.zip
-mkdir -p "$KAFKAMGR_HOME"
-mv /tmp/${km}/*  "$KAFKAMGR_HOME"
+mkdir -p "$KAFKAMGR['home']"
+mv /tmp/${km}/*  "$KAFKAMGR['home']"
 [ ! -e "${KM_CONFIGFILE}" ] || cp "${KM_CONFIGFILE}" "${KM_CONFIGFILE}".bak
 
 #create startup script
 cat << EOF > ${tools}/run.sh
 #!/bin/bash
-cd "${KAFKAMGR_HOME}"
+cd "${KAFKAMGR['home']}"
 shift
-exec "${KAFKAMGR_HOME}/bin/kafka-manager" -Dconfig.file="$KM_CONFIGFILE" "\${KM_ARGS}" "\${@}" 
+exec "${KAFKAMGR['home']}/bin/kafka-manager" -Dconfig.file="$KM_CONFIGFILE" "\${KM_ARGS}" "\${@}" 
 EOF
 
 chmod +x ${tools}/run.sh
-rm -fr "${KAFKAMGR_HOME}/share"
-mkdir -p "${KAFKAMGR_HOME}/home"
+rm -fr "${KAFKAMGR['home']}/share"
+mkdir -p "${KAFKAMGR['home']}/home"
