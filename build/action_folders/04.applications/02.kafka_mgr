@@ -32,3 +32,4 @@ EOF
 
 chmod +x ${tools}/run.sh
 rm -fr "${KAFKAMGR_HOME}/share"
+mkdir -p "${KAFKAMGR_HOME}/home"
