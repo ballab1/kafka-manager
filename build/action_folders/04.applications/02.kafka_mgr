@@ -8,14 +8,16 @@ declare km="kafka-manager-${KM_VERSION}"
 tar xvf "${KAFKAMGR['file']}"
 cd "kafka-manager-${KAFKAMGR['version']}"
 
+env | sort
+
 # build application
 echo 'scalacOptions ++= Seq("-Xmax-classfile-name", "200")' >> build.sbt
 ./sbt clean dist
 
 # install what we built
-unzip -d /tmp ./target/universal/${km}.zip
-mkdir -p "$KAFKAMGR['home']"
-mv /tmp/${km}/*  "$KAFKAMGR['home']"
+unzip -o -d /tmp ./target/universal/${km}.zip | :
+mkdir -p "${KAFKAMGR['home']}"
+mv /tmp/${km}/*  "${KAFKAMGR['home']}"
 [ ! -e "${KM_CONFIGFILE}" ] || cp "${KM_CONFIGFILE}" "${KM_CONFIGFILE}".bak
 
 #create startup script
