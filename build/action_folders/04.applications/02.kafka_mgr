@@ -6,9 +6,20 @@ declare km="kafka-manager-${KM_VERSION}"
 
 # get our code
 tar xvf "${KAFKAMGR['file']}"
-cd "kafka-manager-${KAFKAMGR['version']}"
+mv "kafka-manager-${KAFKAMGR['version']}" "kafka-manager-ws"
+cd "kafka-manager-ws"
 
-env | sort
+#cat << EOF > .sbtconfig
+#-J-Xns1024M
+#-J-Xms1024M
+#-J-Xmx1024M
+#-J-Xss1M
+#-J-XX:+CMSClassUnloadingEnabled
+#-J-XX:+UseConcMarkSweepGC
+#-J-XX:MaxPermSize=724M
+#-J-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005
+#-J-java.net.preferIPv4Stack=true
+#EOF
 
 # build application
 echo 'scalacOptions ++= Seq("-Xmax-classfile-name", "200")' >> build.sbt

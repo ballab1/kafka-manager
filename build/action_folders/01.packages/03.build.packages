@@ -1,5 +1,7 @@
-# build Packages
+# kafka-manager build Packages
 
 if [ "${CBF['os_id']}" = 'alpine' ]; then
-    apk add --no-cache --virtual .build-deps unzip tar gnupg wget git
+    declare PKGS='unzip tar gnupg wget git'
+    package.checkIfInstalled "$PKGS"
+    apk add --no-cache --virtual .buildDepedencies $PKGS
 fi

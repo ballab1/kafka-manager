@@ -1,5 +1,7 @@
-# core Packages
+# nodejs Packages
 
 if [ "${CBF['os_id']}" = 'alpine' ]; then
-    apk add --no-cache nodejs nodejs-npm 
+    declare PKGS='nodejs nodejs-npm'
+    package.checkIfInstalled "$PKGS"
+    apk add --no-cache $PKGS
 fi

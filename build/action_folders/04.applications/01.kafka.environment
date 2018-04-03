@@ -1,11 +1,11 @@
 #!/bin/bash
 
-declare -r exportVars='KM_ARGS KM_CONTEXT KM_VERSION KAFKAMGR_HOME KM_CONFIGFILE'
+declare -r exportVars='KM_ARGS KM_CONTEXT KM_VERSION KM_HOME KM_CONFIGFILE'
 
 export KM_ARGS="${KM_ARGS:-'-Djava.net.preferIPv4Stack=true'}"
 export KM_CONTEXT="${KM_CONTEXT:-/}"
 export KM_VERSION="${KM_VERSION:-1.3.3.17}"
-export KAFKAMGR_HOME="/usr/local/kafka-manager"
-export KM_CONFIGFILE="${KAFKAMGR_HOME}/conf/application.conf"
+export KM_HOME="${KM_HOME:-/usr/local/kafka-manager}"
+export KM_CONFIGFILE="${KM_HOME}/conf/application.conf"
 
 lib.createFileForRuntimeEnvironment "kafkamgr.properties" "$exportVars" 

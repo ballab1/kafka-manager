@@ -8,13 +8,13 @@ services:
                 CONTAINER_NAME: kafkamgr
                 CONTAINER_VERSION: 1.0.6
                 DEBUG_TRACE: 0
-                FROM_BASE: openjdk_8u131.11-r2:20180314
+                FROM_BASE: openjdk_8u131.11-r2:latest
                 KM_ARGS: '-Djava.net.preferIPv4Stack=true -Dapplication.home=/usr/local/kafka-manager/home' 
                 KM_VERSION: 1.3.3.16
             cache_from:
                 - alpine:3.6
-                - base_container:20180314
-                - openjdk_8u131.11-r2:20180314
+                - base_container:latest
+                - openjdk_8u131.11-r2:latest
             context: .
             dockerfile: Dockerfile
         container_name: kafkamgr2
@@ -30,7 +30,7 @@ services:
             KM_HTTP_CONTEXT: /
             KM_HTTP_CONTEXT: /kafkamgr
         hostname: kafkamgr2
-        image: kafkamgr2:20180314
+        image: kafkamgr2:latest
         logging:
             driver: json-file
             options:

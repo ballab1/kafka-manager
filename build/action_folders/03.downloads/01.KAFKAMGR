@@ -3,9 +3,9 @@
 declare -A KAFKAMGR=()
 
 KAFKAMGR['version']=${KM_VERSION:-1.3.3.17}
-KAFKAMGR['file']="/tmp/${KAFKAMGR['version']}.tar.bz2"
+KAFKAMGR['file']="/tmp/kafka-manager-${KAFKAMGR['version']}.tar.bz2"
 KAFKAMGR['url']="https://github.com/yahoo/kafka-manager/archive/${KAFKAMGR['version']}.tar.gz"
 KAFKAMGR['sha256']="742ab0aefa8dbf40c1767ad937096a989df6b76fc31b42c732fded0e97a71536"
-KAFKAMGR['home']=${KAFKAMGR_HOME:-"/usr/local/kafkamgr"}
+KAFKAMGR['home']=${KM_HOME:-"/usr/local/kafka-manager"}
 
-KAFKAMGR_HOME="${KAFKAMGR['home']}"
+KM_HOME="${KAFKAMGR['home']}"
