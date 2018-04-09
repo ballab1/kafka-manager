@@ -1,11 +1,12 @@
 #!/bin/bash
 
-declare -r exportVars='KM_ARGS KM_CONTEXT KM_VERSION KM_HOME KM_CONFIGFILE'
 
-export KM_ARGS="${KM_ARGS:-'-Djava.net.preferIPv4Stack=true'}"
-export KM_CONTEXT="${KM_CONTEXT:-/}"
-export KM_VERSION="${KM_VERSION:-1.3.3.17}"
-export KM_HOME="${KM_HOME:-/usr/local/kafka-manager}"
-export KM_CONFIGFILE="${KM_HOME}/conf/application.conf"
+declare -ar env_kafka=(
+    'KM_ARGS="${KM_ARGS:-"-Djava.net.preferIPv4Stack=true"}"'
+    'KM_CONTEXT="${KM_CONTEXT:-/}"'
+    'KM_VERSION="${KM_VERSION:-1.3.3.17}"'
+    'KM_HOME="${KM_HOME:-/usr/local/kafka-manager}"'
+    'KM_CONFIGFILE="${KM_HOME}/conf/application.conf"'
+)
 
-lib.createFileForRuntimeEnvironment "$exportVars" 
+lib.updateRuntimeEnvironment "${env_kafka[*]}" 

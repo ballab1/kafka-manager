@@ -1,7 +1,4 @@
 # nodejs Packages
 
-if [ "${CBF['os_id']}" = 'alpine' ]; then
-    declare PKGS='nodejs nodejs-npm'
-    package.checkIfInstalled "$PKGS"
-    apk add --no-cache $PKGS
-fi
+declare -a PKGS=( nodejs
+                  nodejs-npm )
