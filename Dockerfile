@@ -19,7 +19,6 @@ ENV DEBUG_TRACE=0
 
 ARG KM_ARGS="-Djava.net.preferIPv4Stack=true"
 ARG KM_CONTEXT=/
-ARG KM_VERSION=1.3.3.17
 
 
 
