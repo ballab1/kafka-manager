@@ -9,4 +9,4 @@ declare -ar env_kafkam=(
     'KM_CONFIGFILE="${KM_HOME}/conf/application.conf"'
 )
 
-lib.updateRuntimeEnvironment "${env_kafkam[*]}" 
+crf.updateRuntimeEnvironment "${env_kafkam[*]}" 
