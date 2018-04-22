@@ -1,7 +1,7 @@
 version: '3.5'
 
 services:
-    kafkamgr2:
+    kafkamgr:
         build:
             args:
                 CBF_VERSION: ${CBF_VERSION:-dev}
@@ -9,14 +9,13 @@ services:
                 CONTAINER_VERSION: 1.0.6
                 FROM_BASE: openjdk_8u131.11-r2:latest
                 KM_ARGS: '-Djava.net.preferIPv4Stack=true -Dapplication.home=/usr/local/kafka-manager/home' 
-                KM_VERSION: 1.3.3.16
             cache_from:
                 - alpine:3.6
                 - base_container:latest
                 - openjdk_8u131.11-r2:latest
             context: .
             dockerfile: Dockerfile
-        container_name: kafkamgr2
+        container_name: kafkamgr
         environment:
             APPLICATION_SECRET: letmein
 #            BASE_ZK_PATH: 
@@ -29,8 +28,8 @@ services:
             KM_HTTP_CONTEXT: /
 #            KM_HTTP_CONTEXT: /kafkamgr
             ZK_HOSTS: 10.1.3.6:2181,10.1.3.11:2181
-        hostname: kafkamgr2
-        image: kafkamgr2:latest
+        hostname: kafkamgr
+        image: kafkamgr:latest
         logging:
             driver: json-file
             options:
