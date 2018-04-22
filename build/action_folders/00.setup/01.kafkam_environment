@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-declare -ar env_kafka=(
+declare -ar env_kafkam=(
     'KM_ARGS="${KM_ARGS:-"-Djava.net.preferIPv4Stack=true"}"'
     'KM_CONTEXT="${KM_CONTEXT:-/}"'
     'KM_VERSION="${KM_VERSION:-1.3.3.17}"'
@@ -9,4 +9,4 @@ declare -ar env_kafka=(
     'KM_CONFIGFILE="${KM_HOME}/conf/application.conf"'
 )
 
-lib.updateRuntimeEnvironment "${env_kafka[*]}" 
+lib.updateRuntimeEnvironment "${env_kafkam[*]}" 
