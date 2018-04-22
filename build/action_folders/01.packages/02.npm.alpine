@@ -1,4 +1,4 @@
 # nodejs Packages
 
-declare -a PKGS=( nodejs 
+declare -a PKGS=( nodejs
                   nodejs-npm )
