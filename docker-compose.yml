@@ -4,53 +4,39 @@ services:
     kafkamgr:
         build:
             args:
+                CBF_VERSION: ${CBF_VERSION:-dev}
                 CONTAINER_NAME: kafkamgr
                 CONTAINER_VERSION: 1.0.6
-                DEBUG_TRACE: 0
-                FROM_BASE: openjdk_8u131.11-r2:20180314
-                KM_ARGS: 'play.http.context=/kafkamgr -Djava.net.preferIPv4Stack=true' 
-                KM_VERSION: 1.3.3.16
+                FROM_BASE: openjdk_8u131.11-r2:latest
+                KM_ARGS: '-Djava.net.preferIPv4Stack=true -Dapplication.home=/usr/local/kafka-manager/home' 
             cache_from:
                 - alpine:3.6
-                - base_container:20180314
-                - openjdk_8u131.11-r2:20180314
+                - base_container:latest
+                - openjdk_8u131.11-r2:latest
             context: .
             dockerfile: Dockerfile
         container_name: kafkamgr
         environment:
             APPLICATION_SECRET: letmein
-            ZK_HOSTS: zookeeper:2181,10.1.3.11:2181
+#            BASE_ZK_PATH: 
+            DEBUG_TRACE: ${DEBUG_TRACE:-0}
+            CONSUMER_PROPERTIES_FILE: /usr/local/kafka-manager/conf/consumer.properties
+            KAFKA_MANAGER_PASSWORD: password
+            KAFKA_MANAGER_USERNAME: admin
+            KAFKA_MANAGER_AUTH_ENABLED: 'false'
+            KAFKA_MANAGER_LOGLEVEL: INFO
+            KM_HTTP_CONTEXT: /
+#            KM_HTTP_CONTEXT: /kafkamgr
+            ZK_HOSTS: 10.1.3.6:2181,10.1.3.11:2181
         hostname: kafkamgr
-        image: kafkamgr:20180314
-#        links:
-#            - zookeeper:zookeeper
+        image: kafkamgr:latest
         logging:
             driver: json-file
             options:
                 max-file: "3"
                 max-size: "10m"
         ports:
-            - 8006:9000
-#        restart: unless-stopped
-
-
-#    kafkamgr:
-#        container_name: kafkamgr
-#        environment:
-#            APPLICATION_SECRET: letmein
-#            KM_CONTEXT: '/kafkamgr'
-#            KM_ARGS: '-Dplay.http.context="/kafkamgr" -Djava.net.preferIPv4Stack=true'
-#            ZK_HOSTS: zookeeper:2181,10.1.3.11:2181
-#        hostname: kafkamgr
-#        image: sheepkiller/kafka-manager:alpine
-#        links:
-#            - zookeeper:zookeeper
-#        logging:
-#            driver: json-file
-#            options:
-#                max-size: "10m"
-#                max-file: "3"
-#        ports:
-#            - 8006:9000
-#        restart: unless-stopped
-
+            - 8106:9000
+        restart: unless-stopped
+        volumes:
+            - ./vols/log:/usr/local/kafka-manager/home 

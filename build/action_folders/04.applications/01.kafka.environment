@@ -1,9 +1,0 @@
-#!/bin/bash
-
-declare -r exportVars='KM_ARGS KM_CONTEXT KM_VERSION'
-
-export KM_ARGS="${KM_ARGS:-'-Djava.net.preferIPv4Stack=true'}"
-export KM_CONTEXT="${KM_CONTEXT:-/}"
-export KM_VERSION="1.3.3.16"
-
-lib.createFileForRuntimeEnvironment "kafka.properties" "$exportVars" 

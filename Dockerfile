@@ -8,18 +8,19 @@ ARG CONTAINER_VERSION=1.0.0
 LABEL org_name=$CONTAINER_NAME \
       version=$CONTAINER_VERSION 
 
+# Specify CBF version to use with our configuration and customizations
+ARG CBF_VERSION=${CBF_VERSION:-v3.0}
+# include our project files
+COPY build /tmp/
 # set to non zero for the framework to show verbose action scripts
-ARG DEBUG_TRACE=0
+#    (0:default, 1:trace & do not cleanup; 2:continue after errors)
+ENV DEBUG_TRACE=0
 
 
 ARG KM_ARGS="-Djava.net.preferIPv4Stack=true"
 ARG KM_CONTEXT=/
-ARG KM_VERSION=1.3.3.16
 
 
-
-# Add configuration and customizations
-COPY build /tmp/
 
 # build content
 RUN set -o verbose \
@@ -28,7 +29,7 @@ RUN set -o verbose \
 RUN [ $DEBUG_TRACE != 0 ] || rm -rf /tmp/* 
 
 
-WORKDIR /kafka-manager-${KM_VERSION}
+WORKDIR /usr/local/kafka-manager
 EXPOSE 9000
 
 ENTRYPOINT [ "docker-entrypoint.sh" ]
