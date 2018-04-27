@@ -1,18 +1,18 @@
-version: '3.5'
+version: '3.3'
 
 services:
     kafkamgr:
         build:
             args:
-                CBF_VERSION: ${CBF_VERSION:-dev}
+                CBF_VERSION: "${CBF_VERSION:-}"
                 CONTAINER_NAME: kafkamgr
-                CONTAINER_VERSION: 1.0.6
-                FROM_BASE: openjdk_8u131.11-r2:latest
+                CONTAINER_VERSION: ${CONTAINER_VERSION:-3.0.0}
+                FROM_BASE: openjdk_8u131.11-r2:${CONTAINER_TAG:-latest}
                 KM_ARGS: '-Djava.net.preferIPv4Stack=true -Dapplication.home=/usr/local/kafka-manager/home' 
             cache_from:
-                - alpine:3.6
-                - base_container:latest
-                - openjdk_8u131.11-r2:latest
+                - alpine:3.8
+                - base_container:${CONTAINER_TAG:-latest}
+                - openjdk_8u131.11-r2:${CONTAINER_TAG:-latest}
             context: .
             dockerfile: Dockerfile
         container_name: kafkamgr
@@ -25,18 +25,17 @@ services:
             KAFKA_MANAGER_USERNAME: admin
             KAFKA_MANAGER_AUTH_ENABLED: 'false'
             KAFKA_MANAGER_LOGLEVEL: INFO
-            KM_HTTP_CONTEXT: /
-#            KM_HTTP_CONTEXT: /kafkamgr
-            ZK_HOSTS: 10.1.3.6:2181,10.1.3.11:2181
+#            KM_HTTP_CONTEXT: /
+            KM_HTTP_CONTEXT: /kafkamgr
+            ZK_HOSTS: zookeeper:2181,10.1.3.6:2181,10.1.3.11:2181
         hostname: kafkamgr
-        image: kafkamgr:latest
+        image: kafkamgr:${CONTAINER_TAG:-latest}
         logging:
             driver: json-file
             options:
                 max-file: "3"
                 max-size: "10m"
         ports:
-            - 8106:9000
-        restart: unless-stopped
+            - 9000:9000
         volumes:
             - ./vols/log:/usr/local/kafka-manager/home 
