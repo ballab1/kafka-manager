@@ -1,4 +1,4 @@
-ARG FROM_BASE=${DOCKER_REGISTRY:-}openjdk_8u131.11-r2:${CONTAINER_TAG:-latest}
+ARG FROM_BASE=${DOCKER_REGISTRY:-}openjdk:${CONTAINER_TAG:-latest}
 FROM $FROM_BASE
 
 # name and version of this docker image
@@ -17,6 +17,9 @@ ENV DEBUG_TRACE=0
 ARG KM_ARGS="-Djava.net.preferIPv4Stack=true"
 ARG KM_CONTEXT=/
 
+# kafka.manager version being bundled in this docker image
+ARG KM_VERSION=${KM_VERSION:-1.3.3.18}
+LABEL kafka.manager.version=$KM_VERSION
 
 
 # build content
