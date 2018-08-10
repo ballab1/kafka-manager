@@ -4,7 +4,7 @@ FROM $FROM_BASE
 # name and version of this docker image
 ARG CONTAINER_NAME=kafkamgr
 # Specify CBF version to use with our configuration and customizations
-ARG CBF_VERSION="${CBF_VERSION}"
+ARG CBF_VERSION
 
 # include our project files
 COPY build Dockerfile /tmp/
@@ -14,11 +14,11 @@ COPY build Dockerfile /tmp/
 ENV DEBUG_TRACE=0
 
 
-ARG KM_ARGS="-Djava.net.preferIPv4Stack=true"
+ARG KM_ARGS="-Djava.net.preferIPv4Stack=true -Dapplication.home=/usr/local/kafka-manager/home"
 ARG KM_CONTEXT=/
 
 # kafka.manager version being bundled in this docker image
-ARG KM_VERSION=${KM_VERSION:-1.3.3.18}
+ARG KM_VERSION=1.3.3.18
 LABEL kafka.manager.version=$KM_VERSION
 
 
