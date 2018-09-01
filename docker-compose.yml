@@ -28,7 +28,7 @@ services:
 #            BASE_ZK_PATH:
             DEBUG_TRACE: ${DEBUG_TRACE:-0}
             CONSUMER_PROPERTIES_FILE: /usr/local/kafka-manager/conf/consumer.properties
-            KAFKA_MANAGER_PASSWORD: password
+            KAFKA_MANAGER_PASSWORD_FILE: /run/secrets/kafka_manager.pwd
             KAFKA_MANAGER_USERNAME: admin
             KAFKA_MANAGER_AUTH_ENABLED: 'false'
             KAFKA_MANAGER_LOGLEVEL: INFO
@@ -44,5 +44,11 @@ services:
                 max-size: "10m"
         ports:
             - 9000:9000
+        secrets:
+            - kafka_manager.pwd
         volumes:
-            - ./vols/log:/usr/local/kafka-manager/home 
+            - ./vols/log:/usr/local/kafka-manager/home
+
+secrets:
+   kafka_manager.pwd:
+     file: ~/.inf/secrets/bobb.password
