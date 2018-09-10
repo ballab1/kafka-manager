@@ -45,6 +45,8 @@ cat << EOF > ${tools}/run.sh
 #!/bin/bash
 cd "$KM_HOME"
 shift
+[ "\${APPLICATION_SECRET:-}" ] || lib.file_env 'APPLICATION_SECRET'
+[ "\${KAFKA_MANAGER_PASSWORD:-}" ] || lib.file_env 'KAFKA_MANAGER_PASSWORD'
 exec "${KM_HOME}/bin/kafka-manager" -Dconfig.file="$KM_CONFIGFILE" "\${KM_ARGS}" "\${@}" 
 EOF
 
