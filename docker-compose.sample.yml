@@ -13,10 +13,10 @@ services:
                 CBF_VERSION: ${CBF_VERSION:-}
                 CONTAINER_NAME: kafkamgr
                 FROM_BASE: ${DOCKER_REGISTRY:-ubuntu-s2:5000/}${CONTAINER_OS:-alpine}/openjdk/${JAVA_VERSION:-8.171.11-r0}:${BASE_TAG:-latest}
-                KM_ARGS: '-Djava.net.preferIPv4Stack=true -Dapplication.home=/usr/local/kafka-manager/home'
+                KM_ARGS: '-Djava.net.preferIPv4Stack=true -Dapplication.home=/usr/local/cmak/home'
                 KM_VERSION: ${KM_VERSION:-1.3.3.18}
             cache_from:
-                - ${DOCKER_REGISTRY:-ubuntu-s2:5000/}thirdparty/${CONTAINER_OS:-alpine}:${OS_VERSION:-3.12.0}
+                - ${DOCKER_REGISTRY:-ubuntu-s2:5000/}thirdparty/${CONTAINER_OS:-alpine}:${OS_VERSION:-3.12.4}
                 - ${DOCKER_REGISTRY:-ubuntu-s2:5000/}${CONTAINER_OS:-alpine}/base_container:${BASE_TAG:-latest}
                 - ${DOCKER_REGISTRY:-ubuntu-s2:5000/}${CONTAINER_OS:-alpine}/openjdk/${JAVA_VERSION:-8.171.11-r0}:${BASE_TAG:-latest}
             context: .
@@ -36,7 +36,7 @@ services:
             APPLICATION_SECRET: letmein
 #            BASE_ZK_PATH:
             DEBUG_TRACE: ${DEBUG_TRACE:-0}
-            CONSUMER_PROPERTIES_FILE: /usr/local/kafka-manager/conf/consumer.properties
+            CONSUMER_PROPERTIES_FILE: /usr/local/cmak/conf/consumer.properties
             KAFKA_MANAGER_PASSWORD_FILE: /run/secrets/kafka_manager.pwd
             KAFKA_MANAGER_USERNAME: admin
             KAFKA_MANAGER_AUTH_ENABLED: 'false'
@@ -58,7 +58,7 @@ services:
         secrets:                              # references to 'secrets' section below 
             - kafka_manager.pwd
         volumes:
-            - ./vols/log:/usr/local/kafka-manager/home             # do not save aplication logs inside container 
+            - ./vols/log:/usr/local/cmak/home             # do not save aplication logs inside container 
 
 # secrets only needed for deploy
 secrets:

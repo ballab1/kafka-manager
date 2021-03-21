@@ -1,4 +1,4 @@
-ARG FROM_BASE=${DOCKER_REGISTRY:-s2.ubuntu.home:5000/}${CONTAINER_OS:-alpine}/openjdk/${JAVA_VERSION:-8.171.11-r0}:${BASE_TAG:-latest} 
+ARG FROM_BASE=${DOCKER_REGISTRY:-s2.ubuntu.home:5000/}${CONTAINER_OS:-alpine}/openjdk/${JAVA_VERSION:-.11.0.9_p11-r0}:${BASE_TAG:-latest} 
 FROM $FROM_BASE
 
 # name and version of this docker image
@@ -14,7 +14,7 @@ COPY build Dockerfile /tmp/
 ENV DEBUG_TRACE=0
 
 
-ARG KM_ARGS="-Djava.net.preferIPv4Stack=true -Dapplication.home=/usr/local/kafka-manager/home"
+ARG KM_ARGS="-Djava.net.preferIPv4Stack=true -Dapplication.home=/usr/local/cmak/home"
 ARG KM_CONTEXT=/
 
 # kafka.manager version being bundled in this docker image
@@ -25,11 +25,11 @@ LABEL version.kafka.manager=$KM_VERSION
 # build content
 RUN set -o verbose \
     && chmod u+rwx /tmp/build.sh \
-    && /tmp/build.sh "$CONTAINER_NAME" "$DEBUG_TRACE" \
+    && /tmp/build.sh "$CONTAINER_NAME" "$DEBUG_TRACE" "$TZ" \
     && ([ "$DEBUG_TRACE" != 0 ] || rm -rf /tmp/*) 
 
 
-WORKDIR /usr/local/kafka-manager
+WORKDIR /usr/local/cmak
 EXPOSE 9000
 
 ENTRYPOINT [ "docker-entrypoint.sh" ]
