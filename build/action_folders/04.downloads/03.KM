@@ -11,5 +11,6 @@ KM['sha256_2.0.0.2']="363f6619dd0ec82a53b4e304df62895e219fba2f83438c50953c32f695
 KM['sha256_3.0.0.0']="cc776f4e61f982fe4494c3bce773134521c9dc74ab840a5d0b99b5afbac48fca"
 KM['sha256_3.0.0.4']="1d1135ff0f87310a83af17682e36c26ee8f608964aae33ad7de0cce0cffbd1f4"
 KM['sha256_3.0.0.5']="1b62b33f240602e5532b1d6dc1253cba9d37575a948cabc26fb5f78e48b86861"
+KM['sha256_3.0.0.6']="b6ab974606746aae6096056d30297953952b26a635e4d3d18d121abc1ca4fab8"
 KM['sha256']="${KM['sha256_'${KM['version']}]}"
 KM['home']=${KM_HOME:-"/usr/local/cmak"}
