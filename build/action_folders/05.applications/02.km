@@ -9,6 +9,8 @@ mv "$km" "kafka-manager-ws"
 cd "kafka-manager-ws"
 
 #cat << EOF > .sbtconfig
+# -J-XX:+UnlockExperimentalVMOptions
+# -J-XX:+UseJVMCICompiler
 #-J-Xns1024M
 #-J-Xms1024M
 #-J-Xmx1024M
@@ -47,7 +49,7 @@ cat << EOF > ${tools}/run.sh
 cd "$KM_HOME"
 [ "\${APPLICATION_SECRET:-}" ] || lib.file_env 'APPLICATION_SECRET'
 [ "\${KAFKA_MANAGER_PASSWORD:-}" ] || lib.file_env 'KAFKA_MANAGER_PASSWORD'
-exec "${KM_HOME}/bin/cmak" -Dconfig.file="$KM_CONFIGFILE" "\${KM_ARGS}" "\${@}" 
+exec "${KM_HOME}/bin/cmak" -Dconfig.file="$KM_CONFIGFILE" "\${KM_ARGS}" "\${@}"
 EOF
 
 rm -fr "${KM_HOME}/share"
