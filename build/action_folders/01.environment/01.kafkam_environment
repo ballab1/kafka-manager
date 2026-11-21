@@ -14,6 +14,6 @@ declare -ar env_kafkam=(
 )
 
 #remove WORKDIR so it comes after KAFKA_MANAGER
-crf.removeFromRuntimeEnvironment 'USER'
-crf.removeFromRuntimeEnvironment 'WORKDIR'
-crf.updateRuntimeEnvironment "${env_kafkam[@]}" 
+crf::removeFromRuntimeEnvironment 'USER'
+crf::removeFromRuntimeEnvironment 'WORKDIR'
+crf::updateRuntimeEnvironment "${env_kafkam[@]}"

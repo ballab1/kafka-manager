@@ -2,7 +2,7 @@
 
 __file="${KM_HOME}/conf/routes"
 if [ "$KM_HTTP_CONTEXT" != '/' ] ; then
-    term.log "    updating '${__file}' use HTTP context '$KM_HTTP_CONTEXT'\n" 'white'
+    term::log "    updating '${__file}' use HTTP context '$KM_HTTP_CONTEXT'\n" 'white'
     sed -Ei \
         -e "s|^(\w+\s+)/|\1${KM_HTTP_CONTEXT}/|g" \
            "$__file"
@@ -10,8 +10,8 @@ fi
 
 [ -e "${KM_HOME}/RUNNING_PID" ] && rm "${KM_HOME}/RUNNING_PID"
 
-[ "${APPLICATION_SECRET:-}" ] || lib.file_env 'APPLICATION_SECRET'
-[ "${KAFKA_MANAGER_PASSWORD:-}" ] || lib.file_env 'KAFKA_MANAGER_PASSWORD'
+[ "${APPLICATION_SECRET:-}" ] || lib::file_env 'APPLICATION_SECRET'
+[ "${KAFKA_MANAGER_PASSWORD:-}" ] || lib::file_env 'KAFKA_MANAGER_PASSWORD'
 echo
 echo 'Kafka-Manager configuration'
 echo "    APPLICATION_SECRET:         ${APPLICATION_SECRET:-}"

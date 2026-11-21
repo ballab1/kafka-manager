@@ -31,8 +31,8 @@ for attempt in {0..4}; do
     (./sbt clean dist) && status=$? || status=$?
 #    [ "$status" -eq 0 ] && [ -e "./target/universal/${km,,}.zip" ] && break
     [ -e "./target/universal/${km,,}.zip" ] && break
-    term.log "\nFailed to build kafka-manager.  retrying\n\n" 'warn'
-    [ $attempt -eq 4 ] && trap.die 'failed to build kafka-manager'
+    term::log "\nFailed to build kafka-manager.  retrying\n\n" 'warn'
+    [ $attempt -eq 4 ] && trap::die 'failed to build kafka-manager'
 done
 
 
@@ -47,8 +47,8 @@ chmod a+rx "${KM_HOME}/bin/cmak"
 cat << EOF > ${tools}/run.sh
 #!/bin/bash
 cd "$KM_HOME"
-[ "\${APPLICATION_SECRET:-}" ] || lib.file_env 'APPLICATION_SECRET'
-[ "\${KAFKA_MANAGER_PASSWORD:-}" ] || lib.file_env 'KAFKA_MANAGER_PASSWORD'
+[ "\${APPLICATION_SECRET:-}" ] || lib::file_env 'APPLICATION_SECRET'
+[ "\${KAFKA_MANAGER_PASSWORD:-}" ] || lib::file_env 'KAFKA_MANAGER_PASSWORD'
 exec "${KM_HOME}/bin/cmak" -Dconfig.file="$KM_CONFIGFILE" "\${KM_ARGS}" "\${@}"
 EOF
 
